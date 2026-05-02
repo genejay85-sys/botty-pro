@@ -13,25 +13,30 @@ from telegram.ext import (
 )
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-BOT_TOKEN = "8189141997:AAGjIB39qSjJt-k9FNouJ_5W6mUaPs9-jYg"
-ADMIN_ID  = 8769146517          # Your Telegram user ID (integer)
+BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+ADMIN_ID  = 123456789          # Your Telegram user ID (integer)
 
 WALLETS = {
-    "BTC":  "bc1ql4jxdu8s67ape5sm9pn850g3qj3f6qzepyasem",
-    "USDT": "0xb97f0FD482C6dAA750529Bc40dCE158201376f2d",
-    "SOL":  "6i5nCQxvAQr5zu3z3zKaL3SKcQ5FRfEwSM9sVXbqXPmv",
+    "BTC":  "YOUR_BTC_ADDRESS_HERE",
+    "USDT": "YOUR_USDT_ADDRESS_HERE",
+    "SOL":  "YOUR_SOL_ADDRESS_HERE",
 }
 
 PLANS = {
     "basic": {
-        "name":  "Basic Bot Plan",
-        "price": "$2,000",
-        "desc":  "Runs on 2 trading pairs simultaneously.",
+        "name":  "Basic Plan",
+        "price": "$500",
+        "desc":  "Automated trades on up to 2 pairs.",
+    },
+    "standard": {
+        "name":  "Standard Plan",
+        "price": "$1,000",
+        "desc":  "Automated trades on up to 3 pairs.",
     },
     "premium": {
-        "name":  "Premium Bot Plan",
-        "price": "$5,000",
-        "desc":  "Runs on up to 6 trading pairs simultaneously.",
+        "name":  "Premium Plan",
+        "price": "$2,000",
+        "desc":  "Automated trades on up to 5 pairs.",
     },
 }
 
@@ -118,8 +123,9 @@ def make_ref(user_id):
 # ── HELPERS ───────────────────────────────────────────────────────────────────
 def plan_keyboard():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("🥉 Basic Bot Plan — $2,000",   callback_data="plan_basic")],
-        [InlineKeyboardButton("🥇 Premium Bot Plan — $5,000", callback_data="plan_premium")],
+        [InlineKeyboardButton("🥉 Basic Plan — $500",      callback_data="plan_basic")],
+        [InlineKeyboardButton("🥈 Standard Plan — $1,000", callback_data="plan_standard")],
+        [InlineKeyboardButton("🥇 Premium Plan — $2,000",  callback_data="plan_premium")],
     ])
 
 def crypto_keyboard():
@@ -148,10 +154,12 @@ async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE) -> int:
         f"👋 Welcome, {user}!\n\n"
         "I'm the official sales bot. Choose a plan below to get started.\n\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
-        "🥉 *Basic Bot Plan — $2,000*\n"
-        "   • Active on 2 trading pairs at a time\n\n"
-        "🥇 *Premium Bot Plan — $5,000*\n"
-        "   • Active on up to 6 trading pairs at once\n"
+        "🥉 *Basic Plan — $500*\n"
+        "   • Automated trades on up to 2 pairs\n\n"
+        "🥈 *Standard Plan — $1,000*\n"
+        "   • Automated trades on up to 3 pairs\n\n"
+        "🥇 *Premium Plan — $2,000*\n"
+        "   • Automated trades on up to 5 pairs\n"
         "━━━━━━━━━━━━━━━━━━━━\n\n"
         "👇 Select your plan:"
     )
@@ -348,19 +356,21 @@ async def orderstats_command(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     pending   = sum(1 for r in rows if r[7] == "pending")
     delivered = sum(1 for r in rows if r[7] == "delivered")
     rejected  = sum(1 for r in rows if r[7] == "rejected")
-    basic_count   = sum(1 for r in rows if "Basic" in r[3])
-    premium_count = sum(1 for r in rows if "Premium" in r[3])
+    basic_count    = sum(1 for r in rows if "Basic" in r[3])
+    standard_count = sum(1 for r in rows if "Standard" in r[3])
+    premium_count  = sum(1 for r in rows if "Premium" in r[3])
 
     text = (
         f"📊 *Order Statistics*\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"Total Orders:    {total}\n"
-        f"⏳ Pending:      {pending}\n"
-        f"✅ Delivered:    {delivered}\n"
-        f"❌ Rejected:     {rejected}\n"
+        f"Total Orders:     {total}\n"
+        f"⏳ Pending:       {pending}\n"
+        f"✅ Delivered:     {delivered}\n"
+        f"❌ Rejected:      {rejected}\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"🥉 Basic Plan:   {basic_count}\n"
-        f"🥇 Premium Plan: {premium_count}\n"
+        f"🥉 Basic Plan:    {basic_count}\n"
+        f"🥈 Standard Plan: {standard_count}\n"
+        f"🥇 Premium Plan:  {premium_count}\n"
     )
     await update.message.reply_text(text, parse_mode="Markdown")
 
