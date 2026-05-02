@@ -13,13 +13,13 @@ from telegram.ext import (
 )
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
-ADMIN_ID  = 123456789          # Your Telegram user ID (integer)
+BOT_TOKEN = "8189141997:AAGjIB39qSjJt-k9FNouJ_5W6mUaPs9-jYg"
+ADMIN_ID  = 8769146517          # Your Telegram user ID (integer)
 
 WALLETS = {
-    "BTC":  "YOUR_BTC_ADDRESS_HERE",
-    "USDT": "YOUR_USDT_ADDRESS_HERE",
-    "SOL":  "YOUR_SOL_ADDRESS_HERE",
+    "BTC":  "bc1ql4jxdu8s67ape5sm9pn850g3qj3f6qzepyasem",
+    "USDT": "0xb97f0FD482C6dAA750529Bc40dCE158201376f2d",
+    "SOL":  "6i5nCQxvAQr5zu3z3zKaL3SKcQ5FRfEwSM9sVXbqXPmv",
 }
 
 PLANS = {
